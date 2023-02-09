@@ -3,7 +3,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import "../assets/css/cart.scss";
 import { Link, useNavigate } from "react-router-dom";
 import ShoeImg from "../assets/images/shoeWomen.png";
-
+import Login from "./Auth";
 import { FiGlobe } from "react-icons/fi";
 import { BsBag, BsHeart, BsSearch } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
@@ -15,8 +15,9 @@ import { FiMenu } from "react-icons/fi";
 import Button from "@mui/material/Button";
 function OffCanvasExample({ name, ...props }) {
   const { cartItems, setCartItems } = useContext(StoreContext);
-  const [show, setShow] = useState(false);
+  const { userInfo, setUserinfo } = useContext(StoreContext);
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -110,17 +111,23 @@ function OffCanvasExample({ name, ...props }) {
             <div className="cart__body__products">
               {cartItems &&
                 cartItems.map((item) => (
-                  <div key={item.id} className="cart__body__products__item">
+                  < div key={item.id} className="cart__body__products__item" >
                     <div className="cart__body__products__item__content">
                       <h3 className="cart__body__products__item__content__h">
-                        {item.title}
+                        {item.name}
                       </h3>
                       <span className="cart__body__products__item__content__span">
-                        {item.materials}
+                        {/* {
+                          item.materials && item.materials.map(e => (
+                            `${e.material.name} `
+                          ))
+                        } */}
                       </span>
                     </div>
                     <div className="cart__body__products__item__image">
-                      <img src={ShoeImg} alt="" />
+                      <img
+                        src={`https://newramanaapplication.azurewebsites.net/uploads/images/${item.images[0].path}`}
+                        alt="" />
                       <span
                         onClick={() => removeHandler(item)}
                         className="cart__body__products__item__image__x"
@@ -138,17 +145,25 @@ function OffCanvasExample({ name, ...props }) {
                 {cartItems.reduce((total, item) => +item.price + total, 0)} azn
               </span>
               <div className="cart__body__total__button">
-                <Link
-                  className="cart__body__total__button__btn__link"
-                  to="checkout"
-                >
-                  <button
-                    onClick={handleClose}
-                    className="cart__body__total__button__btn"
-                  >
-                    checkout
-                  </button>
-                </Link>
+                {
+                  userInfo ?
+                    <Link
+                      className="cart__body__total__button__btn__link"
+                      to={userInfo ? "/checkout" : "/"}
+                    >
+                      <button
+                        onClick={handleClose}
+                        className="cart__body__total__button__btn"
+                      >
+                        checkout
+                      </button>
+                    </Link> :
+                    <Link>
+                      <Login />
+                    </Link>
+
+                }
+
               </div>
             </div>
           </div>

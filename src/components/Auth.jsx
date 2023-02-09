@@ -11,14 +11,13 @@ import "../assets/css/header.scss";
 import Ramanalogo from "./RamanalogoBlack";
 import { FiMenu } from "react-icons/fi";
 import Button from "@mui/material/Button";
-import axios from "axios";
 import { useContext } from "react";
 import { StoreContext } from "../StoreContext";
 import toast, { Toaster } from "react-hot-toast";
 import Register from "./Register";
 import Signin from "./Login";
 import { RiH1 } from "react-icons/ri";
-
+import Profile from "./Profile";
 function OffCanvasExample({ name, ...props }) {
   const mediaMatch = window.matchMedia("(max-width: 576px)");
   const [show, setShow] = useState(false);
@@ -28,7 +27,6 @@ function OffCanvasExample({ name, ...props }) {
   const [isRegister, setIsRegister] = useState(true);
 
   const { userInfo, setUserinfo } = useContext(StoreContext);
-  console.log(userInfo);
   return (
     <>
       <Toaster position="bottom-left" reverseOrder={true} />
@@ -105,7 +103,7 @@ function OffCanvasExample({ name, ...props }) {
             )}
           </div>
           {userInfo ? (
-            <h1>salam</h1>
+            <Profile />
           ) : (
             <>
               {" "}

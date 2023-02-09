@@ -1,24 +1,29 @@
 .singleproduct {
   &__cover {
     width: 100%;
-    height: 1570px;
+
     background-image: url(../images/productbackground.png);
     background-position: center;
     background-size: cover;
+
     @media (max-width: 576px) {
       background: #fff;
     }
+
     &__container {
       color: white;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding-bottom: 25px;
+
       @media (max-width: 576px) {
         padding: 0 20px;
         justify-content: flex-start;
         margin-top: 90px;
       }
+
       &__h {
         font-family: "Inter";
         font-style: normal;
@@ -33,6 +38,7 @@
         margin-bottom: 51px;
 
         color: #ffffff;
+
         @media (max-width: 576px) {
           border: none;
 
@@ -41,12 +47,15 @@
           color: #363636;
         }
       }
+
       &__row {
         justify-content: space-between;
         margin-bottom: 25px;
+
         @media (max-width: 576px) {
           flex-direction: column;
         }
+
         &__album {
           background: #fff;
           width: 41%;
@@ -55,23 +64,27 @@
           justify-content: space-between;
           background: transparent;
           padding: 0;
+
           @media (max-width: 576px) {
             flex-direction: row;
             margin-top: 10px;
             width: 100%;
             height: 200px;
           }
+
           &__upper {
             background: #fff;
             height: 49%;
             padding: 100px;
+
             @media (max-width: 576px) {
               height: 100%;
               width: 49%;
               padding: 30px;
-              
+
               background: #dad9d6;
             }
+
             img {
               width: 100%;
               height: 100%;
@@ -79,6 +92,7 @@
               object-position: center;
             }
           }
+
           &__under {
             background: #fff;
             height: 49%;
@@ -90,6 +104,7 @@
               padding: 30px;
               background: #dad9d6;
             }
+
             img {
               width: 100%;
               height: 100%;
@@ -98,25 +113,31 @@
             }
           }
         }
+
         &__mainproduct {
           padding: 47px 55px 33px;
           background: #fff;
+
           @media (max-width: 576px) {
             width: 100%;
             background: #dad9d6;
           }
+
           &__header {
             display: flex;
             justify-content: space-between;
+
             &__icons {
               font-size: 25px;
               display: flex;
               align-items: center;
               color: #363636;
+
               @media (max-width: 576px) {
                 font-size: 15px;
               }
             }
+
             &__title {
               &__h {
                 font-family: "Inter";
@@ -130,26 +151,32 @@
                 margin: 0;
                 color: #363636;
               }
+
               &__span {
                 font-size: 24px;
                 font-weight: 300;
                 text-transform: uppercase;
                 color: #363636;
               }
+
               @media (max-width: 576px) {
                 font-size: 14px;
+
                 &__h {
                   font-size: 14px;
                 }
+
                 &__span {
                   font-size: 14px;
                 }
               }
             }
           }
+
           &__image {
             width: 100%;
             padding: 20px;
+
             .slick-slider {
               .slick-arrow {
                 &::before {
@@ -160,6 +187,7 @@
                 }
               }
             }
+
             img {
               width: 100%;
               height: 100%;
@@ -169,14 +197,17 @@
           }
         }
       }
+
       &__details {
         background: #fff;
         padding: 47px 55px 33px;
+
         @media (max-width: 576px) {
           flex-direction: column;
           padding: 0;
           background: transparent;
         }
+
         &__left {
           &__p {
             font-family: "Inter";
@@ -187,6 +218,7 @@
             color: #000000;
             margin-bottom: 26px;
           }
+
           @media (max-width: 576px) {
             width: 100%;
             background: #dad9d6;
@@ -195,13 +227,16 @@
             margin-bottom: 40px;
           }
         }
+
         &__right {
           display: flex;
           justify-content: space-around;
+
           @media (max-width: 576px) {
             width: 100%;
             justify-content: space-between;
           }
+
           &__inputs {
             display: flex;
             justify-content: center;
@@ -227,6 +262,7 @@
               border: 1px solid black;
               padding-right: 10px;
             }
+
             &__select {
               width: 100%;
               height: 60px;
@@ -244,6 +280,7 @@
               color: #000;
             }
           }
+
           &__btns {
             display: flex;
             flex-direction: column;
@@ -264,6 +301,7 @@
               border: none;
               transition: 200ms ease-in-out;
               color: #ffffff;
+
               &:hover {
                 background: #fff;
                 color: black;

@@ -17,9 +17,11 @@ import Shop from "./pages/Shop";
 import { useState, useEffect, useMemo } from "react";
 import { StoreContext } from "./StoreContext";
 import Likes from "./pages/Likes";
+import OrderConfirm from "./pages/OrderConfirm";
 import OffCanvasExample from "./components/Cart";
 import Cart from "./components/Cart";
-
+import { Provider } from "react-redux";
+import { store } from "../src/features/index";
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -67,29 +69,32 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <StoreContext.Provider value={favoritesValue}>
-          <Header />
-          <CookieModal />
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/shop/:gender" element={<Shop />} />
-            <Route path="/branches" element={<Branches />} />
-            <Route path="/location" element={<Location />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/*" element={<NothingPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/likes" element={<Likes />} />
+      <Provider store={store}>
 
-            <Route path="/singleproduct/:id" element={<SingleProduct />} />
-          </Routes>
+        <Router>
+          <StoreContext.Provider value={favoritesValue}>
+            <Header />
+            <CookieModal />
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/shop/:gender" element={<Shop />} />
+              <Route path="/branches" element={<Branches />} />
+              <Route path="/location" element={<Location />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/orderconfirm" element={<OrderConfirm />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/*" element={<NothingPage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/likes" element={<Likes />} />
+              <Route path="/singleproduct/:id" element={<SingleProduct />} />
+            </Routes>
 
-          <Footer />
-        </StoreContext.Provider>
-      </Router>
+            <Footer />
+          </StoreContext.Provider>
+        </Router>
+      </Provider>
     </div>
   );
 }

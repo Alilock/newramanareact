@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../assets/css/header.scss";
 import { FiGlobe } from "react-icons/fi";
 import { BsHeart, BsHeartFill, BsSearch } from "react-icons/bs";
@@ -9,11 +9,21 @@ import Cart from "./Cart";
 import Login from "./Auth";
 import { useTranslation } from "react-i18next";
 import HeaderLangs from "./HeaderLangs";
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllGenders, getAllGenders, getLoading } from "../features/gender/genderSlice";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const genders = useSelector(getAllGenders);
+  const loading = useSelector(getLoading);
+  useEffect(() => {
+    dispatch(fetchAllGenders())
+  }, [dispatch])
+  
 
   document.addEventListener("scroll", () => {
     const header = document.querySelector(".header");
@@ -26,8 +36,8 @@ const Header = () => {
       style={{
         background:
           window.location.pathname === "/likes" ||
-          window.location.pathname === "/checkout" ||
-          window.location.pathname === "/singleproduct/1"
+            window.location.pathname === "/checkout" ||
+            window.location.pathname === "/singleproduct/1"
             ? "black"
             : "",
       }}
@@ -51,62 +61,60 @@ const Header = () => {
                 </Link>
                 <div className="products__hover">
                   <ul className="products__hover__ul">
-                    <li id="men">
-                      <Link to="/shop/male" className="nav__links">
-                        men
-                      </Link>
-                    </li>
-
-                    <div className="men__hover">
-                      <ul className="men__hover__ul">
-                        <li
-                          style={{ fontWeight: "bold" }}
-                          className="men__hover__ul__li"
-                        >
-                          footwear
-                        </li>
-                        <li className="men__hover__ul__li">loafers</li>
-                        <li className="men__hover__ul__li">lace up shoes</li>
-                        <li className="men__hover__ul__li">sandals</li>
-                        <li className="men__hover__ul__li">moccasins</li>
-                        <li className="men__hover__ul__li">winter boots</li>
-                        <li className="men__hover__ul__li">leather shoes</li>
-                      </ul>
-                      <ul className="men__hover__ul ">
-                        <li
-                          style={{ fontWeight: "bold" }}
-                          className="men__hover__ul__li"
-                        >
-                          handbags
-                        </li>
-                        <li className="men__hover__ul__li">mini bags</li>
-                        <li className="men__hover__ul__li">backpacks</li>
-                        <li className="men__hover__ul__li">laptop bags</li>
-                        <li className="men__hover__ul__li">suit cases</li>
-                        <li className="men__hover__ul__li">duffel bags</li>
-                        <li className="men__hover__ul__li">strapless bags</li>
-                      </ul>
-                      <ul className="men__hover__ul ">
-                        <li
-                          style={{ fontWeight: "bold" }}
-                          className="men__hover__ul__li"
-                        >
-                          accessories
-                        </li>
-                        <li className="men__hover__ul__li">wallets</li>
-                        <li className="men__hover__ul__li">belts</li>
-                        <li className="men__hover__ul__li">keychains</li>
-                        <li className="men__hover__ul__li">watch bands</li>
-                        <li className="men__hover__ul__li">headewear</li>
-                        <li className="men__hover__ul__li">leathercases</li>
-                      </ul>
-                    </div>
-                    <li>
-                      <Link to="/shop/female" className="nav__links">
-                        women
-                      </Link>
-                    </li>
-                    <li>kids</li>
+                    {
+                      genders && genders.map(g => (
+                        <>
+                          <li id="men">
+                            <Link to={`shop/${g.id}`} className="nav__links">
+                              {g.name}
+                            </Link>
+                          </li>
+                          <div className="men__hover">
+                            <ul className="men__hover__ul">
+                              <li
+                                style={{ fontWeight: "bold" }}
+                                className="men__hover__ul__li"
+                              >
+                                footwear
+                              </li>
+                              <li className="men__hover__ul__li">loafers</li>
+                              <li className="men__hover__ul__li">lace up shoes</li>
+                              <li className="men__hover__ul__li">sandals</li>
+                              <li className="men__hover__ul__li">moccasins</li>
+                              <li className="men__hover__ul__li">winter boots</li>
+                              <li className="men__hover__ul__li">leather shoes</li>
+                            </ul>
+                            <ul className="men__hover__ul ">
+                              <li
+                                style={{ fontWeight: "bold" }}
+                                className="men__hover__ul__li"
+                              >
+                                handbags
+                              </li>
+                              <li className="men__hover__ul__li">mini bags</li>
+                              <li className="men__hover__ul__li">backpacks</li>
+                              <li className="men__hover__ul__li">laptop bags</li>
+                              <li className="men__hover__ul__li">suit cases</li>
+                              <li className="men__hover__ul__li">duffel bags</li>
+                              <li className="men__hover__ul__li">strapless bags</li>
+                            </ul>
+                            <ul className="men__hover__ul ">
+                              <li
+                                style={{ fontWeight: "bold" }}
+                                className="men__hover__ul__li"
+                              >
+                                accessories
+                              </li>
+                              <li className="men__hover__ul__li">wallets</li>
+                              <li className="men__hover__ul__li">belts</li>
+                              <li className="men__hover__ul__li">keychains</li>
+                              <li className="men__hover__ul__li">watch bands</li>
+                              <li className="men__hover__ul__li">headewear</li>
+                              <li className="men__hover__ul__li">leathercases</li>
+                            </ul>
+                          </div></>
+                      ))
+                    }
                   </ul>
                 </div>
               </li>

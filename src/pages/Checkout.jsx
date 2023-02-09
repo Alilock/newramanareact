@@ -2,14 +2,21 @@ import React, { useState, useContext } from "react";
 import { useEffect } from "react";
 import { redirect } from "react-router-dom";
 import { StoreContext } from "../StoreContext";
-
+import { useNavigate } from "react-router-dom";
+import moment from 'moment';
 const Checkout = () => {
   const [fullname, setFullname] = useState(String);
   const [email, setEmail] = useState(String);
   const [address, setAddress] = useState(String);
   const [number, setNumber] = useState(Number);
-
+  const [payment, setPayment] = useState('')
+  const { userInfo } = useContext(StoreContext);
   const { cartItems, setCartItems } = useContext(StoreContext);
+  const navigate = useNavigate();
+  const today = moment().format("DD MMM YYYY")
+  const deliveryday = moment().add(2, 'days').format("DD MMM YYYY")
+
+
   const removeHandler = (item) => {
     let cart = [];
     cart = cartItems.filter((c) => c.id !== item.id);
@@ -26,19 +33,19 @@ const Checkout = () => {
           <div className="main__container__info row">
             <div className="main__container__info__box col-lg-3 col-md-3 col-6">
               <p>data of order</p>
-              <span>13 may 2022</span>
+              <span>{today}</span>
             </div>
             <div className="main__container__info__box col-lg-3 col-md-3 col-6">
               <p>number of items</p>
-              <span>3 items</span>
+              <span>{cartItems.length} items</span>
             </div>
             <div className="main__container__info__box col-lg-3 col-md-3 col-6">
               <p>name of buyer</p>
-              <span>ali huseynov</span>
+              <span>{userInfo && userInfo.user.name} {userInfo && userInfo.user.surName}</span>
             </div>
             <div className="main__container__info__box col-lg-3 col-md-3 col-6">
               <p>delivery date</p>
-              <span>15 may</span>
+              <span>{deliveryday}</span>
             </div>
           </div>
           <div className="main__container__orders">
@@ -47,16 +54,19 @@ const Checkout = () => {
                 <div key={item.id} className="main__container__orders__row row">
                   <div className="main__container__orders__row__title col-6">
                     <p>
-                      {item.title} - {item.price} azn
+                      {item.name} - {item.price} azn
                     </p>
-                    <span>{item.materials}</span>
+                    {
+                      item.materials.map(e => (
+                        `${e.material.name} `
+                      ))
+                    }
                   </div>
                   <div className="main__container__orders__row__product col-5">
                     <div className="main__container__orders__row__product__image">
                       <img
-                        src="https://m.media-amazon.com/images/I/817NXl9u6RL._AC_SL1500_.jpg"
-                        alt=""
-                      />
+                        src={`https://newramanaapplication.azurewebsites.net/uploads/images/${item.images[0].path}`}
+                        alt="" />
                     </div>
                   </div>
                   <div onClick={() => removeHandler(item)} className="x col-1">
@@ -84,6 +94,7 @@ const Checkout = () => {
                   id="fullname"
                   className="input__data"
                   type="text"
+                  value={userInfo && userInfo.user.name}
                   onChange={(e) => {
                     setFullname(e.target.value);
                   }}
@@ -117,6 +128,8 @@ const Checkout = () => {
                   id="phonenumber"
                   className="input__data"
                   type="number"
+                  value={userInfo && userInfo.user.phoneNumber}
+
                   onChange={(e) => setNumber(e.target.value)}
                 />
               </div>
@@ -204,6 +217,8 @@ const Checkout = () => {
                   name="emailaddress"
                   id="emailaddress"
                   className="input__data"
+                  value={userInfo && userInfo.user.email}
+
                   type="text"
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -240,7 +255,7 @@ const Checkout = () => {
               delivery time: 2 days
             </div>
             <div className="main__container__orderinfo__box col-3 payment__box">
-              <span>payment: card</span>
+              <span>payment: {payment}</span>
               <svg
                 className="svg__chevron"
                 width="15"
@@ -254,12 +269,14 @@ const Checkout = () => {
               <div className="payment__hover">
                 <ul className="payment__hover__ul">
                   <li className="payment__hover__ul__li">
-                    <label htmlFor="debitcard">debit card</label>
+                    <label htmlFor="debitcard">debit cart</label>
                     <input
                       className="payment__radio"
                       type="radio"
                       id="debitcard"
                       name="payment"
+                      value="debit"
+                      onChange={(e) => setPayment(e.currentTarget.value)}
                     />
                   </li>
                   <li className="payment__hover__ul__li">
@@ -269,13 +286,15 @@ const Checkout = () => {
                       type="radio"
                       id="cash"
                       name="payment"
+                      value="cash"
+                      onChange={(e) => setPayment(e.currentTarget.value)}
                     />
                   </li>
                 </ul>
               </div>
             </div>
             <div className="main__container__orderinfo__box col-3">
-              your total: 670 azn
+              your total: {cartItems.reduce((total, item) => +item.price + total, 0)} azn
             </div>
           </div>
           <div className="main__container__button">

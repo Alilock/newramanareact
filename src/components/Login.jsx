@@ -13,7 +13,7 @@ const Signin = ({ setIsRegister }) => {
     e.preventDefault();
     try {
       const resp = await axios.post(
-        "https://newramana.azurewebsites.net/api/account/login",
+        "https://newramanaapplication.azurewebsites.net/api/account/login",
         {
           email,
           password,

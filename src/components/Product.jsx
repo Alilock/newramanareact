@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../assets/css/product.scss";
 import arrow from "../assets/images/Arrow.png";
-import axios from "axios";
 import LoadingBox from "./LoadingBox";
 import ReactPaginate from "react-paginate";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
@@ -11,25 +10,27 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { BsBag, BsHeart, BsHeartFill, BsBagFill } from "react-icons/bs";
-
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllProducts, getLoading, getAllProducts } from "../features/products/productSlice";
 import { StoreContext } from "../StoreContext";
 
-const reducer = (state, action) => {
+// const reducer = (state, action) => {
 
-  switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "FETCH_SUCCESS":
-      return { ...state, loading: false, products: action.payload };
-    case "FETCH_FAIL":
-      return { ...state, loading: false, error: true };
-    default:
-      return state;
-  }
-  
-};
+//   switch (action.type) {
+//     case "FETCH_REQUEST":
+//       return { ...state, loading: true };
+//     case "FETCH_SUCCESS":
+//       return { ...state, loading: false, products: action.payload };
+//     case "FETCH_FAIL":
+//       return { ...state, loading: false, error: true };
+//     default:
+//       return state;
+//   }
+
+// };
 
 const MenProduct = () => {
+  const [prGender, setprGender] = useState([])
   let settings = {
     dots: false,
     arrows: false,
@@ -41,56 +42,34 @@ const MenProduct = () => {
     pauseOnHover: false,
     autoplay: false,
   };
+
+
   const navigate = useNavigate();
-  const [{ products, error, loading }, dispatch] = useReducer(reducer, {
-    products: [],
-    loading: true,
-    error: false,
-  });
+  // const [{ products, error, loading }, dispatch] = useReducer(reducer, {
+  //   products: [],
+  //   loading: false,
+  //   error: false,
+  // });
 
   const { setGender } = useContext(StoreContext);
   const params = useParams();
   const productGender = params.gender;
 
+  const dispatch = useDispatch();
+  const products = useSelector(getAllProducts)
+  const loading = useSelector(getLoading)
   useEffect(() => {
-    const getProducts = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
-      try {
-        setGender(productGender);
 
-        const resp = await axios.get(
-          `http://localhost:3000/products?gender=${productGender}`
-        );
+    dispatch(fetchAllProducts())
+    let newarr = products && products.filter(p => p.genderId == params.gender)
+    setprGender(newarr)
 
-        dispatch({ type: "FETCH_SUCCESS", payload: resp.data });
-      } catch (error) {}
-
-      dispatch({ type: "FETCH_FAIL" });
-    };
-    getProducts();
-  }, [productGender]);
-
-  // const fetchProducts = async (currentPage) => {
-  //   try {
-  //     const res = await axios.get(
-  //       `http://localhost:3000/products?_page=${currentPage}&_limit=9`
-  //     );
-  //     return res.data;
-  //   } catch (error) {
-  //     alert("error");
-  //   }
-  // };
-
+  }, [productGender, dispatch]);
+  console.log(prGender)
   const { favorites, setFavorites, cartItems, setCartItems } =
     useContext(StoreContext);
 
-  // const handlePageClick = async (data) => {
-  //   let currentPage = data.selected + 1;
-  //   const menproductsFormServer = await fetchProducts(currentPage);
-  //   dispatch({ type: "FETCH_SUCCESS", payload: menproductsFormServer });
-  // };
 
-  //localFavadd
   const favoriteHandler = (product) => {
     let FavoritProds = JSON.parse(localStorage.getItem("favorites"));
     let existedProduct = FavoritProds.find((fav) => fav.id === product.id);
@@ -122,14 +101,13 @@ const MenProduct = () => {
   };
 
   return loading ? (
-    <div>
-      <LoadingBox />
-    </div>
+    <LoadingBox />
   ) : (
     <>
-      {products &&
-        products.map((product) => {
+      {prGender &&
+        prGender.map((product) => {
           return (
+
             <div key={product.id} className="product__box col-6">
               <div className="icons__div__product">
                 <span
@@ -159,11 +137,13 @@ const MenProduct = () => {
               >
                 <Slider {...settings}>
                   {product.images &&
-                    product.images.map((img) => (
-                      <img
+                    product.images.map((img) =>
+                    (
+                      < img
                         className="produc__img"
                         key={product.id}
-                        src={img}
+                        src={`https://newramanaapplication.azurewebsites.net/uploads/images/${img.path}`}
+
                         alt=""
                       />
                     ))}
@@ -174,7 +154,7 @@ const MenProduct = () => {
                 className="product__box__content"
               >
                 <div className="product__box__content__details col-9">
-                  <h3>{product.title}</h3>
+                  <h3>{product.name}</h3>
                   <span>{product.price} AZN</span>
                 </div>
                 <div className="product__box__content__arrow col-3">
