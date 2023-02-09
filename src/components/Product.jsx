@@ -10,8 +10,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { BsBag, BsHeart, BsHeartFill, BsBagFill } from "react-icons/bs";
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllProducts, getLoading, getAllProducts } from "../features/products/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllProducts,
+  getLoading,
+  getAllProducts,
+} from "../features/products/productSlice";
 import { StoreContext } from "../StoreContext";
 
 // const reducer = (state, action) => {
@@ -30,7 +34,7 @@ import { StoreContext } from "../StoreContext";
 // };
 
 const MenProduct = () => {
-  const [prGender, setprGender] = useState([])
+  const [prGender, setprGender] = useState([]);
   let settings = {
     dots: false,
     arrows: false,
@@ -42,7 +46,6 @@ const MenProduct = () => {
     pauseOnHover: false,
     autoplay: false,
   };
-
 
   const navigate = useNavigate();
   // const [{ products, error, loading }, dispatch] = useReducer(reducer, {
@@ -56,19 +59,16 @@ const MenProduct = () => {
   const productGender = params.gender;
 
   const dispatch = useDispatch();
-  const products = useSelector(getAllProducts)
-  const loading = useSelector(getLoading)
+  const products = useSelector(getAllProducts);
+  const loading = useSelector(getLoading);
   useEffect(() => {
-
-    dispatch(fetchAllProducts())
-    let newarr = products && products.filter(p => p.genderId == params.gender)
-    setprGender(newarr)
-
+    dispatch(fetchAllProducts());
+    let newarr =
+      products && products.filter((p) => p.genderId == params.gender);
+    setprGender(newarr);
   }, [productGender, dispatch]);
-  console.log(prGender)
   const { favorites, setFavorites, cartItems, setCartItems } =
     useContext(StoreContext);
-
 
   const favoriteHandler = (product) => {
     let FavoritProds = JSON.parse(localStorage.getItem("favorites"));
@@ -107,7 +107,6 @@ const MenProduct = () => {
       {prGender &&
         prGender.map((product) => {
           return (
-
             <div key={product.id} className="product__box col-6">
               <div className="icons__div__product">
                 <span
@@ -137,13 +136,11 @@ const MenProduct = () => {
               >
                 <Slider {...settings}>
                   {product.images &&
-                    product.images.map((img) =>
-                    (
-                      < img
+                    product.images.map((img) => (
+                      <img
                         className="produc__img"
                         key={product.id}
                         src={`https://newramanaapplication.azurewebsites.net/uploads/images/${img.path}`}
-
                         alt=""
                       />
                     ))}
