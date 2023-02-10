@@ -22,11 +22,10 @@ const OrderDetails = () => {
   const loading = useSelector(getOrderLoading);
   const params = useParams();
   const id = params.id;
-  console.log(loading);
+  console.log(order);
   useEffect(() => {
     dispatch(fetchOrderByDetails(id));
   }, []);
-  console.log(order);
   return loading ? (
     <LoadingBox />
   ) : (
@@ -118,7 +117,13 @@ const OrderDetails = () => {
                   {prod.product.name && prod.product.name} -{" "}
                   {prod.product.price && prod.product.price}
                 </p>
-                {/* <span>{prod.materials && prod.materials}</span> */}
+                <span>{prod.materials && console.log(prod.materials[0].name)}</span>
+              </div>
+              <div className="col-6 img">
+                <img
+                  src={`https://newramanaapplication.azurewebsites.net/uploads/images/${prod.product.images[0].path}`}
+                  alt="categoryimg"
+                />
               </div>
             </div>
           ))}
