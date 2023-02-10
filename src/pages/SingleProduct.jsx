@@ -27,6 +27,7 @@ const SingleProduct = () => {
   }, []);
 
 
+
   const settings = {
     dots: true,
     infinite: true,

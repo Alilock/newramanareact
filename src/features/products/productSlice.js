@@ -15,15 +15,11 @@ export const fetchAllProducts = createAsyncThunk(
       "https://newramanaapplication.azurewebsites.net/api/product"
     );
     return response.data.data;
-  }
-);
 
-export const fetchProductById = createAsyncThunk(
-  "genders/getById",
-  async (id) => {
-    const response = await axios.get(
-      `https://newramanaapplication.azurewebsites.net/api/product/${id}`
-    );
+});
+
+export const fetchProductById = createAsyncThunk("products/getById", async (id) => {
+    const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/product/${id}`);
     return response.data.data;
   }
 );
