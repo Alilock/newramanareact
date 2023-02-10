@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchOrder } from "../features/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
-import { getOrder, fetchOrder } from "../features/order/orderSlice";
 import axios from "axios";
 const Checkout = () => {
   const [fullname, setFullname] = useState(String);
