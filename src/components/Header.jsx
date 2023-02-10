@@ -23,7 +23,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchAllGenders())
   }, [dispatch])
-  
+
 
   document.addEventListener("scroll", () => {
     const header = document.querySelector(".header");
@@ -37,7 +37,8 @@ const Header = () => {
         background:
           window.location.pathname === "/likes" ||
             window.location.pathname === "/checkout" ||
-            window.location.pathname === "/singleproduct/1"
+            window.location.pathname === "/singleproduct/1" ||
+            window.location.pathname === "/orderlist"
             ? "black"
             : "",
       }}

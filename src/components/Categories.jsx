@@ -7,19 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCategories, getAllCategories, getLoading } from "../features/categories/categorySlice";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const Categories = () => {
+const Categories = ({ filterHandler }) => {
 
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
   useEffect(() => {
     dispatch(fetchAllCategories())
   }, []);
-
   return (
     <ul className="filter__categories__hover__ul">
       {categories &&
         categories.map((category) => (
-          <li key={category} className="filter__categories__hover__ul__li">
+          <li onClick={() => filterHandler(category.id)} key={category} className="filter__categories__hover__ul__li">
             <Checkbox {...label} /> {category.name}
           </li>
         ))}

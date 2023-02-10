@@ -35,9 +35,8 @@ const Shop = () => {
       <div className="shop">
         <div className="shop__cover">
           <img
-            src={`https://newramanaapplication.azurewebsites.net/uploads/images/${
-              genderData && genderData.imagePath
-            }`}
+            src={`https://newramanaapplication.azurewebsites.net/uploads/images/${genderData && genderData.imagePath
+              }`}
             alt="genderImg"
           />
           <h1>

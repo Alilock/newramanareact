@@ -9,13 +9,13 @@ const initialState = {
     loadingById: false
 }
 
-export const fetchAllOrders = createAsyncThunk("orders/getAlll", async () => {
-    const response = await axios.get("https://newramanaapplication.azurewebsites.net/api/shop");
+export const fetchAllOrders = createAsyncThunk("orders/getAll", async () => {
+    const response = await axios.get("https://newramanaapplication.azurewebsites.net/api/shop/orders");
     return response.data.data;
 });
-export const fetchOrderById = createAsyncThunk("orders/getByIdd", async (id) => {
-    const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/shop/${id}`);
-    return response.data.data;
+export const fetchOrderById = createAsyncThunk("orders/getById", async (id) => {
+    const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/shop/orders/${id}`);
+    return response.data;
 });
 
 export const orderSlice = createSlice({

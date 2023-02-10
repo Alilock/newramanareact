@@ -16,12 +16,12 @@ export const fetchAllProducts = createAsyncThunk(
     );
     return response.data.data;
 
-});
+  });
 
 export const fetchProductById = createAsyncThunk("products/getById", async (id) => {
-    const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/product/${id}`);
-    return response.data.data;
-  }
+  const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/product/${id}`);
+  return response.data.data;
+}
 );
 
 export const productSlice = createSlice({

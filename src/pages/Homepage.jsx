@@ -24,7 +24,7 @@ const Homepage = () => {
     dispatch(fetchAllCategories())
   }, [dispatch])
 
-
+ 
   return (
     loading ? (
 

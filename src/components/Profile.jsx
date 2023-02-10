@@ -10,6 +10,10 @@ const Profile = () => {
     const { userInfo } = useContext(StoreContext);
 
     const navigate = useNavigate();
+    const golist = () => {
+        console.log('a');
+        navigate("/orderlist")
+    }
     const logoutHandler = () => {
         try {
             localStorage.removeItem("userInfo");
@@ -52,7 +56,7 @@ const Profile = () => {
                 </div>
                 <div className="profile__box__navs">
                     <ul className="profile__box__navs__ul">
-                        <li className="profile__box__navs__ul__li">
+                        <li onClick={() => golist()} className="profile__box__navs__ul__li">
                             order history{" "}
                             <span>
                                 <img src={arrow} alt="" />

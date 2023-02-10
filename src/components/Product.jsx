@@ -33,7 +33,8 @@ import { StoreContext } from "../StoreContext";
 
 // };
 
-const MenProduct = () => {
+const MenProduct = (props) => {
+  console.log(props);
   const [prGender, setprGender] = useState([]);
   let settings = {
     dots: false,

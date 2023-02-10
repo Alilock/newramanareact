@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { redirect } from "react-router-dom";
 import { StoreContext } from "../StoreContext";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrder } from "../features/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
@@ -27,7 +26,6 @@ const Checkout = () => {
 
   const orderCheckout = () => {
 
-    dispatch(fetchOrder(cartItems))
   }
 
   const removeHandler = (item) => {
