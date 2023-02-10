@@ -6,23 +6,28 @@ import "../assets/css/singleproduct.scss";
 import shoespng from "../assets/images/brownshoes.png";
 import { BsBag, BsHeart, BsHeartFill, BsBagFill } from "react-icons/bs";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductById, getProduct, getProductLoading } from "../features/products/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchProductById,
+  getProduct,
+  getProductLoading,
+} from "../features/products/productSlice";
 import { useParams } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
 
-
 const SingleProduct = () => {
-
   const params = useParams();
   const _id = params.id;
 
   const dispatch = useDispatch();
-  const product = useSelector(getProduct)
+  const product = useSelector(getProduct);
   const loading = useSelector(getProductLoading);
   useEffect(() => {
-    dispatch(fetchProductById(_id))
-  }, [])
+    dispatch(fetchProductById(_id));
+  }, []);
+
+
+
   const settings = {
     dots: true,
     infinite: true,
@@ -31,8 +36,10 @@ const SingleProduct = () => {
     slidesToScroll: 1,
   };
 
-  return (
-    loading ? <LoadingBox /> : product &&
+  return loading ? (
+    <LoadingBox />
+  ) : (
+    product && (
       <div className="singleproduct">
         <div className="singleproduct__cover">
           <div className="singleproduct__cover__container container">
@@ -60,7 +67,8 @@ const SingleProduct = () => {
                   <Slider {...settings}>
                     {product.images &&
                       product.images.map((image) => (
-                        <img key={image.path}
+                        <img
+                          key={image.path}
                           src={`https://newramanaapplication.azurewebsites.net/uploads/images/${image.path}`}
                           alt="categoryimg"
                         />
@@ -71,11 +79,26 @@ const SingleProduct = () => {
               </div>
               <div className="singleproduct__cover__container__row__album ">
                 <div className="singleproduct__cover__container__row__album__upper">
-                  <img src={product.images && `https://newramanaapplication.azurewebsites.net/uploads/images/${product.images[product.images.length - 1].path}`} alt="" />
+                  <img
+                    src={
+                      product.images &&
+                      `https://newramanaapplication.azurewebsites.net/uploads/images/${
+                        product.images[product.images.length - 1].path
+                      }`
+                    }
+                    alt=""
+                  />
                 </div>
                 <div className="singleproduct__cover__container__row__album__under">
-                  <img src={product.images && `https://newramanaapplication.azurewebsites.net/uploads/images/${product.images[product.images.length - 2].path}`} alt="" />
-
+                  <img
+                    src={
+                      product.images &&
+                      `https://newramanaapplication.azurewebsites.net/uploads/images/${
+                        product.images[product.images.length - 2].path
+                      }`
+                    }
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
@@ -88,24 +111,20 @@ const SingleProduct = () => {
                 <p className="singleproduct__cover__container__details__left__p">
                   Materials:
                   <br />
-                  {product.materials && product.materials.map(m => (
-                    <span style={{ marginRight: "10px" }}>
-                      {m.material.name}
-                    </span>
-                  ))}
+                  {product.materials &&
+                    product.materials.map((m) => (
+                      <span style={{ marginRight: "10px" }}>
+                        {m.material.name}
+                      </span>
+                    ))}
                 </p>{" "}
                 <p className="singleproduct__cover__container__details__left__p">
                   Avaliable sizes:
                   <br />
-                  <span style={{ marginRight: "10px" }}>
-                    39
-                  </span> <span style={{ marginRight: "10px" }}>
-                    40
-                  </span> <span style={{ marginRight: "10px" }}>
-                    41
-                  </span> <span style={{ marginRight: "10px" }}>
-                    42
-                  </span>
+                  <span style={{ marginRight: "10px" }}>39</span>{" "}
+                  <span style={{ marginRight: "10px" }}>40</span>{" "}
+                  <span style={{ marginRight: "10px" }}>41</span>{" "}
+                  <span style={{ marginRight: "10px" }}>42</span>
                 </p>{" "}
                 <p
                   style={{ margin: 0 }}
@@ -147,6 +166,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+    )
   );
 };
 

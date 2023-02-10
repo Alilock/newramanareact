@@ -5,13 +5,17 @@ import { StoreContext } from "../StoreContext";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrder } from "../features/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
-import moment from 'moment';
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrder, fetchOrder } from "../features/order/orderSlice";
+import axios from "axios";
 const Checkout = () => {
   const [fullname, setFullname] = useState(String);
   const [email, setEmail] = useState(String);
   const [address, setAddress] = useState(String);
   const [number, setNumber] = useState(Number);
-  const [payment, setPayment] = useState('')
+  const [payment, setPayment] = useState("");
+
 
 
   const { userInfo } = useContext(StoreContext);
@@ -20,9 +24,8 @@ const Checkout = () => {
 
 
   const navigate = useNavigate();
-  const today = moment().format("DD MMM YYYY")
-  const deliveryday = moment().add(2, 'days').format("DD MMM YYYY")
-
+  const today = moment().format("DD MMM YYYY");
+  const deliveryday = moment().add(2, "days").format("DD MMM YYYY");
 
   const dispatch = useDispatch();
 
@@ -37,6 +40,29 @@ const Checkout = () => {
     setCartItems(cart);
     localStorage.setItem("cartItems", JSON.stringify(cart));
   };
+  // const dispatch = useDispatch();
+  // const orders = useSelector(getOrder);
+  // console.log(orders);
+  const ids = [];
+  cartItems.map((crt) => {
+    ids.push(crt.id);
+  });
+  const authPaymentHandler = async () => {
+    const me = {
+      userId: userInfo.user.id,
+      address: address,
+      paymentMethod: payment,
+      productIds: ids,
+    };
+    const { data } = await axios.post(
+      "https://newramanaapplication.azurewebsites.net/api/shop",
+      me,
+      {
+        headers: { Authorization: `Bearer ${userInfo.accessToken}` },
+      }
+    );
+  };
+
   return (
     <div>
       <section className="main">
@@ -55,7 +81,10 @@ const Checkout = () => {
             </div>
             <div className="main__container__info__box col-lg-3 col-md-3 col-6">
               <p>name of buyer</p>
-              <span>{userInfo && userInfo.user.name} {userInfo && userInfo.user.surName}</span>
+              <span>
+                {userInfo && userInfo.user.name}{" "}
+                {userInfo && userInfo.user.surName}
+              </span>
             </div>
             <div className="main__container__info__box col-lg-3 col-md-3 col-6">
               <p>delivery date</p>
@@ -70,17 +99,14 @@ const Checkout = () => {
                     <p>
                       {item.name} - {item.price} azn
                     </p>
-                    {
-                      item.materials.map(e => (
-                        `${e.material.name} `
-                      ))
-                    }
+                    {/* {item.materials.map((e) => `${e.material.name} `)} */}
                   </div>
                   <div className="main__container__orders__row__product col-5">
                     <div className="main__container__orders__row__product__image">
                       <img
                         src={`https://newramanaapplication.azurewebsites.net/uploads/images/${item.images[0].path}`}
-                        alt="" />
+                        alt=""
+                      />
                     </div>
                   </div>
                   <div onClick={() => removeHandler(item)} className="x col-1">
@@ -143,7 +169,6 @@ const Checkout = () => {
                   className="input__data"
                   type="number"
                   value={userInfo && userInfo.user.phoneNumber}
-
                   onChange={(e) => setNumber(e.target.value)}
                 />
               </div>
@@ -232,7 +257,6 @@ const Checkout = () => {
                   id="emailaddress"
                   className="input__data"
                   value={userInfo && userInfo.user.email}
-
                   type="text"
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -308,11 +332,15 @@ const Checkout = () => {
               </div>
             </div>
             <div className="main__container__orderinfo__box col-3">
-              your total: {cartItems.reduce((total, item) => +item.price + total, 0)} azn
+              your total:{" "}
+              {cartItems.reduce((total, item) => +item.price + total, 0)} azn
             </div>
           </div>
           <div className="main__container__button">
-            <button onClick={() => orderCheckout}>authorize payment</button>
+            <button onClick={() => authPaymentHandler()}>
+              authorize payment
+            </button>
+
           </div>
         </div>
       </section>
