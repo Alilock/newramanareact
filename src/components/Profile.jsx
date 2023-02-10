@@ -11,7 +11,6 @@ const Profile = () => {
 
     const navigate = useNavigate();
     const golist = () => {
-        console.log('a');
         navigate("/orderlist")
     }
     const logoutHandler = () => {

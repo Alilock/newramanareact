@@ -34,7 +34,6 @@ import { StoreContext } from "../StoreContext";
 // };
 
 const MenProduct = (props) => {
-  console.log(props);
   const [prGender, setprGender] = useState([]);
   let settings = {
     dots: false,
@@ -72,7 +71,6 @@ const MenProduct = (props) => {
     useContext(StoreContext);
 
   const favoriteHandler = (product) => {
-    console.log("salam");
     let FavoritProds = JSON.parse(localStorage.getItem("favorites"));
     let existedProduct = FavoritProds.find((fav) => fav.id === product.id);
 

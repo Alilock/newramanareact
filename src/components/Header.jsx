@@ -9,8 +9,12 @@ import Cart from "./Cart";
 import Login from "./Auth";
 import { useTranslation } from "react-i18next";
 import HeaderLangs from "./HeaderLangs";
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllGenders, getAllGenders, getLoading } from "../features/gender/genderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllGenders,
+  getAllGenders,
+  getLoading,
+} from "../features/gender/genderSlice";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -21,9 +25,8 @@ const Header = () => {
   const genders = useSelector(getAllGenders);
   const loading = useSelector(getLoading);
   useEffect(() => {
-    dispatch(fetchAllGenders())
-  }, [dispatch])
-
+    dispatch(fetchAllGenders());
+  }, [dispatch]);
 
   document.addEventListener("scroll", () => {
     const header = document.querySelector(".header");
@@ -36,9 +39,10 @@ const Header = () => {
       style={{
         background:
           window.location.pathname === "/likes" ||
-            window.location.pathname === "/checkout" ||
-            window.location.pathname === "/singleproduct/1" ||
-            window.location.pathname === "/orderlist"
+          window.location.pathname === "/checkout" ||
+          window.location.pathname === "/singleproduct/1" ||
+          window.location.pathname === "/orderlist" ||
+          window.location.pathname === "/orderdetails/:id"
             ? "black"
             : "",
       }}
@@ -62,8 +66,8 @@ const Header = () => {
                 </Link>
                 <div className="products__hover">
                   <ul className="products__hover__ul">
-                    {
-                      genders && genders.map(g => (
+                    {genders &&
+                      genders.map((g) => (
                         <>
                           <li id="men">
                             <Link to={`shop/${g.id}`} className="nav__links">
@@ -79,11 +83,17 @@ const Header = () => {
                                 footwear
                               </li>
                               <li className="men__hover__ul__li">loafers</li>
-                              <li className="men__hover__ul__li">lace up shoes</li>
+                              <li className="men__hover__ul__li">
+                                lace up shoes
+                              </li>
                               <li className="men__hover__ul__li">sandals</li>
                               <li className="men__hover__ul__li">moccasins</li>
-                              <li className="men__hover__ul__li">winter boots</li>
-                              <li className="men__hover__ul__li">leather shoes</li>
+                              <li className="men__hover__ul__li">
+                                winter boots
+                              </li>
+                              <li className="men__hover__ul__li">
+                                leather shoes
+                              </li>
                             </ul>
                             <ul className="men__hover__ul ">
                               <li
@@ -94,10 +104,16 @@ const Header = () => {
                               </li>
                               <li className="men__hover__ul__li">mini bags</li>
                               <li className="men__hover__ul__li">backpacks</li>
-                              <li className="men__hover__ul__li">laptop bags</li>
+                              <li className="men__hover__ul__li">
+                                laptop bags
+                              </li>
                               <li className="men__hover__ul__li">suit cases</li>
-                              <li className="men__hover__ul__li">duffel bags</li>
-                              <li className="men__hover__ul__li">strapless bags</li>
+                              <li className="men__hover__ul__li">
+                                duffel bags
+                              </li>
+                              <li className="men__hover__ul__li">
+                                strapless bags
+                              </li>
                             </ul>
                             <ul className="men__hover__ul ">
                               <li
@@ -109,13 +125,17 @@ const Header = () => {
                               <li className="men__hover__ul__li">wallets</li>
                               <li className="men__hover__ul__li">belts</li>
                               <li className="men__hover__ul__li">keychains</li>
-                              <li className="men__hover__ul__li">watch bands</li>
+                              <li className="men__hover__ul__li">
+                                watch bands
+                              </li>
                               <li className="men__hover__ul__li">headewear</li>
-                              <li className="men__hover__ul__li">leathercases</li>
+                              <li className="men__hover__ul__li">
+                                leathercases
+                              </li>
                             </ul>
-                          </div></>
-                      ))
-                    }
+                          </div>
+                        </>
+                      ))}
                   </ul>
                 </div>
               </li>

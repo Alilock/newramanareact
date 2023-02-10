@@ -23,6 +23,7 @@ import Cart from "./components/Cart";
 import { Provider } from "react-redux";
 import { store } from "../src/features/index";
 import OrderList from "./pages/OrderList";
+import OrderDetails from "./pages/OrderDetails";
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -71,7 +72,6 @@ function App() {
   return (
     <div className="App">
       <Provider store={store}>
-
         <Router>
           <StoreContext.Provider value={favoritesValue}>
             <Header />
@@ -85,6 +85,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/orderconfirm" element={<OrderConfirm />} />
+              <Route path="/orderdetails/:id" element={<OrderDetails />} />
               <Route path="/search" element={<Search />} />
               <Route path="/*" element={<NothingPage />} />
               <Route path="/about" element={<About />} />
