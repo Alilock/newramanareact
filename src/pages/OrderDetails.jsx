@@ -6,6 +6,9 @@ import { useParams } from "react-router-dom";
 import "../assets/css/orderdetails.scss";
 import img from "../assets/images/Men-Shoes.png";
 import LoadingBox from "../components/LoadingBox";
+import { AiOutlineCheck } from "react-icons/ai";
+import { MdOutlineCancel } from "react-icons/md";
+
 import {
   getByDetails,
   fetchOrderByDetails,
@@ -15,6 +18,7 @@ import {
 const OrderDetails = () => {
   const dispatch = useDispatch();
   const order = useSelector(getByDetails);
+
   const loading = useSelector(getOrderLoading);
   const params = useParams();
   const id = params.id;
@@ -31,16 +35,42 @@ const OrderDetails = () => {
         <div className="orderdetails__details">
           <ul className="orderdetails__details__ul">
             <li className="orderdetails__details__ul__li">
-              <h3>sifarish alindi</h3>
+              <h3>
+                <AiOutlineCheck /> sifarish alindi
+              </h3>
             </li>{" "}
             <li className="orderdetails__details__ul__li">
-              <h3>sifarish hazirlanir</h3>
+              <h3>
+                <AiOutlineCheck /> sifarish hazirlanir
+              </h3>
             </li>{" "}
             <li className="orderdetails__details__ul__li">
-              <h3>yoldadir</h3>
+              <h3>
+                {order.status && order.status === "ondelivery" ? (
+                  <AiOutlineCheck />
+                ) : order.status === "delivered" ? (
+                  <AiOutlineCheck />
+                ) : order.status === "fail" ? (
+                  <MdOutlineCancel />
+                ) : (
+                  ""
+                )}
+                yoldadir
+              </h3>
             </li>{" "}
             <li className="orderdetails__details__ul__li">
-              <h3>teslim alindi</h3>
+              <h3>
+                {order.status && order.status === "ondelivery" ? (
+                  ""
+                ) : order.status === "delivered" ? (
+                  <AiOutlineCheck />
+                ) : order.status === "fail" ? (
+                  <MdOutlineCancel />
+                ) : (
+                  ""
+                )}
+                teslim alindi
+              </h3>
             </li>
           </ul>
         </div>
