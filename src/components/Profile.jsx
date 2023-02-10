@@ -13,7 +13,8 @@ const Profile = () => {
     const logoutHandler = () => {
         try {
             localStorage.removeItem("userInfo");
-            navigate("/");
+            window.location.reload(false);
+
         } catch (error) {
             alert('logout later')
         }

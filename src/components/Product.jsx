@@ -71,22 +71,22 @@ const MenProduct = () => {
     useContext(StoreContext);
 
   const favoriteHandler = (product) => {
+    console.log("salam");
     let FavoritProds = JSON.parse(localStorage.getItem("favorites"));
     let existedProduct = FavoritProds.find((fav) => fav.id === product.id);
 
     if (!existedProduct) {
-      product.isFav = true;
 
       favorites.push(product);
       localStorage.setItem("favorites", JSON.stringify(favorites));
     } else {
       const updatedArray = FavoritProds.filter((fav) => fav.id !== product.id);
-      product.isFav = false;
 
       setFavorites(updatedArray);
       localStorage.setItem("favorites", JSON.stringify(updatedArray));
     }
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
+
   };
 
   const cartHandler = (product) => {
