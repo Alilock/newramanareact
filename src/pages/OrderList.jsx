@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import "../assets/css/orderlist.scss"
 import Shoes from "../assets/images/Men-Shoes.png"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllOrders, fetchOrderById, getOrder } from "../features/order/orderSlice";
+import { StoreContext } from "../StoreContext";
 const OrderList = () => {
+    const { userInfo } = useContext(StoreContext)
+
+    const order = useSelector(getOrder)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+
+        dispatch(fetchOrderById(13))
+
+    }, [])
+    console.log(order);
     return (
         <div className="order">
             <div className="order__container container">

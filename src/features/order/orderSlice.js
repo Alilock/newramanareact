@@ -1,38 +1,53 @@
-// import axios from "axios";
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// const initialState = {
-//   order: {},
-//   status: null,
-// };
 
-// export const fetchOrder = createAsyncThunk("orders/getAll", async (payload) => {
-//   const response = await axios.post(
-//     "https://newramanaapplication.azurewebsites.net/api/shop",
-//     payload
-//   );
-//   return response.data.data;
-// });
+const initialState = {
+    ordersData: [],
+    orderData: null,
+    loading: false,
+    loadingById: false
+}
 
-// export const orderSlice = createSlice({
-//   name: "orders",
-//   initialState: initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchOrder.pending, (state, action) => {
-//         state.status = "pending";
-//       })
-//       .addCase(fetchOrder.fulfilled, (state, action) => {
-//         state.order = action.payload;
-//         state.status = "success";
-//       })
-//       .addCase(fetchOrder.rejected, (state, action) => {
-//         state.status = "fail";
-//       });
-//   },
-// });
+export const fetchAllOrders = createAsyncThunk("orders/getAlll", async () => {
+    const response = await axios.get("https://newramanaapplication.azurewebsites.net/api/shop");
+    return response.data.data;
+});
+export const fetchOrderById = createAsyncThunk("orders/getByIdd", async (id) => {
+    const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/shop/${id}`);
+    return response.data.data;
+});
 
-// export const getStatus = (state) => state.order.status;
-// export const getOrder = (state) => state.order.order;
-// export default orderSlice.reducer;
+export const orderSlice = createSlice({
+    name: "orders",
+    initialState: initialState,
+    reducers: {
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchAllOrders.pending, (state, action) => {
+
+            state.ordersData = action.payload
+            state.loading = true
+        })
+            .addCase(fetchAllOrders.fulfilled, (state, action) => {
+                state.loading = false;
+                state.ordersData = action.payload;
+            })
+            // .addCase(fetchAllGenders.rejected, (state, action) => {
+            //     // state.loading = false
+            // })
+            .addCase(fetchOrderById.pending, (state, action) => {
+                state.loadingById = true;
+            })
+            .addCase(fetchOrderById.fulfilled, (state, action) => {
+                state.orderData = action.payload
+                state.loadingById = false
+            })
+    }
+})
+
+export const getAllOrders = (state) => state.order.ordersData;
+export const getLoading = (state) => state.order.loading
+export const getOrder = (state) => state.order.orderData
+export const getOrderLoading = (state) => state.order.loadingById
+export default orderSlice.reducer

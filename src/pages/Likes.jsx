@@ -93,7 +93,8 @@ const Likes = () => {
                         <img
                           className="produc__img"
                           key={product.id}
-                          src={img}
+                          src={`https://newramanaapplication.azurewebsites.net/uploads/images/${img.path}`}
+
                           alt=""
                         />
                       ))}
