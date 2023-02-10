@@ -132,9 +132,8 @@ const MenProduct = () => {
               </div>
               <div
                 onClick={() => navigate(`/singleproduct/${product.id}`)}
-                className="product__box__image"
-              >
-                <Slider {...settings}>
+                className="product__box__image">
+                <Slider  {...settings}>
                   {product.images &&
                     product.images.map((img) => (
                       <img

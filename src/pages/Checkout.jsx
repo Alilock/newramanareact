@@ -14,8 +14,6 @@ const Checkout = () => {
   const [number, setNumber] = useState(Number);
   const [payment, setPayment] = useState("");
 
-
-
   const { userInfo } = useContext(StoreContext);
 
   const { cartItems, setCartItems } = useContext(StoreContext);
@@ -59,6 +57,7 @@ const Checkout = () => {
         headers: { Authorization: `Bearer ${userInfo.accessToken}` },
       }
     );
+    navigate("/orderconfirm")
   };
 
   return (

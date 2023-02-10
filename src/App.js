@@ -22,6 +22,7 @@ import OffCanvasExample from "./components/Cart";
 import Cart from "./components/Cart";
 import { Provider } from "react-redux";
 import { store } from "../src/features/index";
+import OrderList from "./pages/OrderList";
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -88,6 +89,7 @@ function App() {
               <Route path="/*" element={<NothingPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/likes" element={<Likes />} />
+              <Route path="/orderlist" element={<OrderList />} />
               <Route path="/singleproduct/:id" element={<SingleProduct />} />
             </Routes>
 
