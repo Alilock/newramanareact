@@ -23,7 +23,6 @@ const SingleProduct = () => {
   useEffect(() => {
     dispatch(fetchProductById(_id))
   }, [])
-  console.log(product)
   const settings = {
     dots: true,
     infinite: true,
@@ -84,7 +83,7 @@ const SingleProduct = () => {
               <div className="singleproduct__cover__container__details__left col-5">
                 <p className="singleproduct__cover__container__details__left__p">
                   Product category: <br />
-                  {product && product.category.name}
+                  {product.category.name && product.category.name}
                 </p>{" "}
                 <p className="singleproduct__cover__container__details__left__p">
                   Materials:

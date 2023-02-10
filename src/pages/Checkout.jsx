@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { useEffect } from "react";
 import { redirect } from "react-router-dom";
 import { StoreContext } from "../StoreContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrder } from "../features/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 const Checkout = () => {
@@ -10,12 +12,24 @@ const Checkout = () => {
   const [address, setAddress] = useState(String);
   const [number, setNumber] = useState(Number);
   const [payment, setPayment] = useState('')
+
+
   const { userInfo } = useContext(StoreContext);
+
   const { cartItems, setCartItems } = useContext(StoreContext);
+
+
   const navigate = useNavigate();
   const today = moment().format("DD MMM YYYY")
   const deliveryday = moment().add(2, 'days').format("DD MMM YYYY")
 
+
+  const dispatch = useDispatch();
+
+  const orderCheckout = () => {
+
+    dispatch(fetchOrder(cartItems))
+  }
 
   const removeHandler = (item) => {
     let cart = [];
@@ -298,7 +312,7 @@ const Checkout = () => {
             </div>
           </div>
           <div className="main__container__button">
-            <button>authorize payment</button>
+            <button onClick={() => orderCheckout}>authorize payment</button>
           </div>
         </div>
       </section>

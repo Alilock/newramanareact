@@ -14,7 +14,7 @@ export const fetchAllProducts = createAsyncThunk("products/getAPI", async () => 
     return response.data.data;
 });
 
-export const fetchProductById = createAsyncThunk("genders/getById", async (id) => {
+export const fetchProductById = createAsyncThunk("products/getById", async (id) => {
     const response = await axios.get(`https://newramanaapplication.azurewebsites.net/api/product/${id}`);
     return response.data.data;
 });
